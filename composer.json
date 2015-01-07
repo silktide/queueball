@@ -16,5 +16,12 @@
     "psr-4": {
       "Silktide\\QueueBall\\": "src"
     }
+  },
+  "extra": {
+    "downsider-puzzle-di": {
+      "silktide/syringe": {
+        "path": "config/syringe.json"
+      }
+    }
   }
 }
