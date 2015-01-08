@@ -10,14 +10,29 @@ namespace Silktide\QueueBall\Message;
 class QueueMessage
 {
 
+    /**
+     * @var string
+     */
     protected $id;
 
+    /**
+     * @var mixed
+     */
     protected $message;
 
+    /**
+     * @var array
+     */
     protected $attributes = [];
 
+    /**
+     * @var string
+     */
     protected $receiptId;
 
+    /**
+     * @var string
+     */
     protected $queueId;
 
     /**

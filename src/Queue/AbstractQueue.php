@@ -17,6 +17,9 @@ abstract class AbstractQueue
 
     const DEFAULT_MESSAGE_LOCK_TIMEOUT = 120;
 
+    /**
+     * @var string
+     */
     protected $queueId;
 
     /**
@@ -35,6 +38,10 @@ abstract class AbstractQueue
         $this->queueId = $queueId;
     }
 
+    /**
+     * @return string
+     * @throws QueueException
+     */
     public function getQueueId()
     {
         if (empty($this->queueId)) {
@@ -45,6 +52,7 @@ abstract class AbstractQueue
 
     /**
      * @param string $queueId
+     * @param int $messageLockTimeout
      * @param array $options
      */
     abstract function createQueue($queueId, $messageLockTimeout = 0, $options = []);
@@ -55,7 +63,7 @@ abstract class AbstractQueue
     abstract function deleteQueue($queueId = null);
 
     /**
-     * @param QueueMessage $message
+     * @param mixed $messageBody
      * @param string|null $queueId
      */
     abstract function sendMessage($messageBody, $queueId = null);

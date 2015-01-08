@@ -11,6 +11,11 @@ use Silktide\QueueBall\Exception\QueueException;
 class SqsMessageFactory implements QueueMessageFactoryInterface
 {
 
+    /**
+     * {@inheritDoc}
+     * @return QueueMessage
+     * @throws \Silktide\QueueBall\Exception\QueueException
+     */
     public function createMessage(array $message, $queueId)
     {
         if (empty($message["Message"][0])) {

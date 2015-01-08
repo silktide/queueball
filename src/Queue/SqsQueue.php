@@ -26,8 +26,16 @@ class SqsQueue extends AbstractQueue
      */
     protected $queueClient;
 
+    /**
+     * @var QueueMessageFactoryInterface
+     */
     protected $messageFactory;
 
+    /**
+     * @param SqsClient $sqsClient
+     * @param QueueMessageFactoryInterface $messageFactory
+     * @param string|null $queueId
+     */
     public function __construct(SqsClient $sqsClient, QueueMessageFactoryInterface $messageFactory, $queueId = null)
     {
         parent::__construct($queueId);
@@ -35,12 +43,19 @@ class SqsQueue extends AbstractQueue
         $this->messageFactory = $messageFactory;
     }
 
+    /**
+     * {@inheritDoc}
+     */
     public function setQueueId($queueId)
     {
         parent::setQueueId($queueId);
         $this->queueUrl = null;
     }
 
+    /**
+     * @param string $queueId
+     * @return string
+     */
     protected function getQueueUrl($queueId)
     {
         if (empty($this->queueUrl)) {
@@ -53,6 +68,9 @@ class SqsQueue extends AbstractQueue
         return $this->queueUrl;
     }
 
+    /**
+     * {@inheritDoc}
+     */
     public function createQueue($queueId, $messageLockTimeout = 0, $options = [])
     {
         $timeout = (int) $messageLockTimeout;
@@ -66,12 +84,18 @@ class SqsQueue extends AbstractQueue
         $this->setQueueId($queueId);
     }
 
+    /**
+     * {@inheritDoc}
+     */
     public function deleteQueue($queueId = null)
     {
         $queueUrl = $this->getQueueUrl($queueId);
         $this->queueClient->deleteQueue(["QueueUrl" => $queueUrl]);
     }
 
+    /**
+     * {@inheritDoc}
+     */
     public function sendMessage($messageBody, $queueId = null)
     {
         $queueUrl = $this->getQueueUrl($queueId);
@@ -81,6 +105,9 @@ class SqsQueue extends AbstractQueue
         ]);
     }
 
+    /**
+     * {@inheritDoc}
+     */
     public function receiveMessage($queueId = null)
     {
         if (empty($queueId)) {
@@ -93,6 +120,9 @@ class SqsQueue extends AbstractQueue
 
     }
 
+    /**
+     * {@inheritDoc}
+     */
     public function completeMessage(QueueMessage $message)
     {
         $queueUrl = $this->getQueueUrl($message->getQueueId());
@@ -102,6 +132,9 @@ class SqsQueue extends AbstractQueue
         ]);
     }
 
+    /**
+     * {@inheritDoc}
+     */
     public function returnMessage(QueueMessage $message)
     {
         $queueUrl = $this->getQueueUrl($message->getQueueId());

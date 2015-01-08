@@ -10,6 +10,11 @@ namespace Silktide\QueueBall\Message;
 interface QueueMessageFactoryInterface
 {
 
+    /**
+     * @param array $message
+     * @param $queueId
+     * @return mixed
+     */
     public function createMessage(array $message, $queueId);
 
 } 
