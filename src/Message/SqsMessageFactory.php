@@ -13,15 +13,15 @@ class SqsMessageFactory implements QueueMessageFactoryInterface
 
     /**
      * {@inheritDoc}
-     * @return QueueMessage
-     * @throws \Silktide\QueueBall\Exception\QueueException
+     * @return null|QueueMessage
+     * @throws QueueException
      */
     public function createMessage(array $message, $queueId)
     {
-        if (empty($message["Message"][0])) {
-            throw new QueueException("Queue message is not in valid SQS message format");
+        if (!isset($message["Messages"][0])) {
+            return null;
         }
-        $message = $message["Message"][0];
+        $message = $message["Messages"][0];
 
         if (empty($message["MessageId"]) || empty($message["Body"]) || empty($message["ReceiptHandle"])) {
             throw new QueueException("SQS message has missing information");

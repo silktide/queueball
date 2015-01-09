@@ -15,15 +15,10 @@ class SqsMessageFactoryTest extends \PHPUnit_Framework_TestCase {
     {
         $factory = new SqsMessageFactory();
 
-        // malformed data
+        // empty queue or malformed data
         $data = [];
         $queueId = "queue";
-        try {
-            $factory->createMessage($data, $queueId);
-            $this->fail("Should not be able to create a message with no data");
-        } catch (QueueException $e) {
-            $this->assertEquals("Queue message is not in valid SQS message format", $e->getMessage());
-        }
+        $this->assertNull($factory->createMessage($data, $queueId));
 
         // missing data
         $messageId = "id";
@@ -31,7 +26,7 @@ class SqsMessageFactoryTest extends \PHPUnit_Framework_TestCase {
         $receiptId = "receiptId";
 
         $data = [
-            "Message" => [
+            "Messages" => [
                 [
                     "MessageId" => $messageId,
                     "Body" => $body,
@@ -39,9 +34,9 @@ class SqsMessageFactoryTest extends \PHPUnit_Framework_TestCase {
                 ]
             ]
         ];
-        foreach ($data["Message"][0] as $field => $value) {
+        foreach ($data["Messages"][0] as $field => $value) {
             $testData = $data;
-            unset($testData["Message"][0][$field]);
+            unset($testData["Messages"][0][$field]);
             try {
                 $factory->createMessage($testData, $queueId);
                 $this->fail("Should not be able to create a message without data for '$field'");
@@ -64,7 +59,7 @@ class SqsMessageFactoryTest extends \PHPUnit_Framework_TestCase {
         ];
 
         $data = [
-            "Message" => [
+            "Messages" => [
                 [
                     "MessageId" => $expected["Id"],
                     "Body" => json_encode($expected["Message"]),
@@ -92,7 +87,7 @@ class SqsMessageFactoryTest extends \PHPUnit_Framework_TestCase {
         $factory = new SqsMessageFactory();
 
         $data = [
-            "Message" => [
+            "Messages" => [
                 [
                     "MessageId" => "blah",
                     "Body" => "\"blah\"",
@@ -101,7 +96,7 @@ class SqsMessageFactoryTest extends \PHPUnit_Framework_TestCase {
             ]
         ];
 
-        $data["Message"][0] = array_merge($data["Message"][0], $messageData);
+        $data["Messages"][0] = array_merge($data["Messages"][0], $messageData);
 
         $queueMessage = $factory->createMessage($data, "queue");
         $this->assertEquals($expected, $queueMessage->getAttributes());
