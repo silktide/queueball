@@ -168,7 +168,7 @@ class SqsQueueTest extends \PHPUnit_Framework_TestCase {
         $messageArray = [1, 2, 3];
 
         $message = \Mockery::mock("Guzzle\\Common\\Collection")->shouldReceive("toArray")->andReturn($messageArray)->getMock();
-        $this->sqsClient->shouldReceive("receiveMessage")->with(["QueueUrl" => $this->queueUrl])->andReturn($message);
+        $this->sqsClient->shouldReceive("receiveMessage")->with(["QueueUrl" => $this->queueUrl, "WaitTimeSeconds" => 0])->andReturn($message);
         $this->messageFactory->shouldReceive("createMessage")->with($messageArray, $this->queueId)->andReturn(true);
 
         $queue = new SqsQueue($this->sqsClient, $this->messageFactory, $this->queueId);
