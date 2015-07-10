@@ -32,6 +32,11 @@ class SqsQueue extends AbstractQueue
     protected $messageFactory;
 
     /**
+     * @var int
+     */
+    protected $waitTime = 0;
+
+    /**
      * @param SqsClient $sqsClient
      * @param QueueMessageFactoryInterface $messageFactory
      * @param string|null $queueId
@@ -50,6 +55,19 @@ class SqsQueue extends AbstractQueue
     {
         parent::setQueueId($queueId);
         $this->queueUrl = null;
+    }
+
+    /**
+     * @param int $seconds
+     * @throws \Exception
+     */
+    public function setWaitTime($seconds)
+    {
+        $seconds = (int) $seconds;
+        if ($seconds < 0 || 20 < $seconds) {
+            throw new \Exception("WaitTime must be a period between 0-20 seconds");
+        }
+        $this->waitTime = $seconds;
     }
 
     /**
@@ -115,7 +133,10 @@ class SqsQueue extends AbstractQueue
             $queueId = $this->getQueueId();
         }
         $queueUrl = $this->getQueueUrl($queueId);
-        $message = $this->queueClient->receiveMessage(["QueueUrl" => $queueUrl]);
+        $message = $this->queueClient->receiveMessage([
+            "QueueUrl" => $queueUrl,
+            "WaitTimeSeconds" => $this->waitTime
+        ]);
         return $this->messageFactory->createMessage($message->toArray(), $queueId);
 
     }
