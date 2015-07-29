@@ -124,9 +124,35 @@ class SqsQueue extends AbstractQueue
     }
 
     /**
+     * This can be used to send up to 10 entries and up to a total of 264kb
+     *
      * {@inheritDoc}
      */
-    public function receiveMessage($queueId = null)
+    public function sendMessageBatch($messageBodies=[], $queueId=null)
+    {
+        if (!is_array($messageBodies)) {
+            throw new \Exception("MessageBodies must be an array");
+        }
+
+        $queueUrl = $this->getQueueUrl($queueId);
+        $entries = [];
+        foreach ($messageBodies as $key => $body) {
+            $entries[] = [
+                "Id" => $key,
+                "MessageBody" => json_encode($body)
+            ];
+        }
+
+        $this->queueClient->sendMessageBatch([
+            "QueueUrl" => $queueUrl,
+            "Entries" => $entries
+        ]);
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public function receiveMessage($queueId = null, $waitTime = null)
     {
         if (empty($queueId)) {
             // have to do this here as we need the ID later in this method
@@ -135,7 +161,7 @@ class SqsQueue extends AbstractQueue
         $queueUrl = $this->getQueueUrl($queueId);
         $message = $this->queueClient->receiveMessage([
             "QueueUrl" => $queueUrl,
-            "WaitTimeSeconds" => $this->waitTime
+            "WaitTimeSeconds" => (isset($waitTime) ? $waitTime : $this->waitTime)
         ]);
         return $this->messageFactory->createMessage($message->toArray(), $queueId);
 
