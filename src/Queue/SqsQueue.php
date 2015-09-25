@@ -4,6 +4,7 @@
  */
 namespace Silktide\QueueBall\Queue;
 
+use Aws\AwsClient;
 use Aws\Sqs\SqsClient;
 use Silktide\QueueBall\Message\QueueMessage;
 use Silktide\QueueBall\Queue\AbstractQueue;
