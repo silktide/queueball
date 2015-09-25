@@ -1,7 +1,5 @@
 {
   "parameters": {
-    "awsKey": "",
-    "awsSecret": "",
     "sqsRegion": "",
     "messageFactoryClass": "Silktide\\QueueBall\\Message\\SqsMessageFactory",
     "queueClass": "Silktide\\QueueBall\\Queue\\SqsQueue"
@@ -10,12 +8,9 @@
   "services": {
     "sqsClient": {
       "class": "Aws\\Sqs\\SqsClient",
-      "factoryClass": "Aws\\Sqs\\SqsClient",
-      "factoryMethod": "factory",
       "arguments": [
         {
-          "key": "%awsKey%",
-          "secret": "%awsSecret%",
+          "version": "2012-11-05",
           "region": "%sqsRegion%"
         }
       ]
