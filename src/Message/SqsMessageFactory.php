@@ -1,8 +1,7 @@
 <?php
-/**
- * Silktide Nibbler. Copyright 2013-2014 Silktide Ltd. All Rights Reserved.
- */
+
 namespace Silktide\QueueBall\Message;
+
 use Silktide\QueueBall\Exception\QueueException;
 
 /**
@@ -16,9 +15,9 @@ class SqsMessageFactory implements QueueMessageFactoryInterface
      * @return null|QueueMessage
      * @throws QueueException
      */
-    public function createMessage(array $message, $queueId)
+    public function createMessage($message, $queueId)
     {
-        if (!isset($message["Messages"][0])) {
+        if (!is_array($message) || !isset($message["Messages"][0])) {
             return null;
         }
         $message = $message["Messages"][0];
