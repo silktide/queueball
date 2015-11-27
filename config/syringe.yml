@@ -1,0 +1,6 @@
+services:
+    messageFactory:
+        class: Silktide\QueueBall\Message\BasicMessageFactory
+
+    defaultQueue:
+        abstract: true
