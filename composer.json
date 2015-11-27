@@ -4,9 +4,7 @@
   "license": "proprietary",
   "homepage": "https://github.com/silktide/queueball",
   "require": {
-    "php": ">=5.3.0",
-    "guzzle/guzzle": "3.*",
-    "aws/aws-sdk-php": "3.*"
+    "php": ">=5.4.0"
   },
   "require-dev": {
     "phpunit/phpunit": "4.*",
@@ -20,7 +18,7 @@
   "extra": {
     "downsider-puzzle-di": {
       "silktide/syringe": {
-        "path": "config/syringe.json"
+        "path": "config/syringe.yml"
       }
     }
   }
