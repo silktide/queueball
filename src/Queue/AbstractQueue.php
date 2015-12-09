@@ -1,8 +1,7 @@
 <?php
-/**
- * Silktide Nibbler. Copyright 2013-2014 Silktide Ltd. All Rights Reserved.
- */
+
 namespace Silktide\QueueBall\Queue;
+
 use Silktide\QueueBall\Exception\QueueException;
 use Silktide\QueueBall\Message\QueueMessage;
 
@@ -55,33 +54,33 @@ abstract class AbstractQueue
      * @param int $messageLockTimeout
      * @param array $options
      */
-    abstract function createQueue($queueId, $messageLockTimeout = 0, $options = []);
+    abstract public function createQueue($queueId, $messageLockTimeout = 0, $options = []);
 
     /**
      * @param string|null $queueId
      */
-    abstract function deleteQueue($queueId = null);
+    abstract public function deleteQueue($queueId = null);
 
     /**
      * @param mixed $messageBody
      * @param string|null $queueId
      */
-    abstract function sendMessage($messageBody, $queueId = null);
+    abstract public function sendMessage($messageBody, $queueId = null);
 
     /**
      * @param string|null $queueId
      * @return QueueMessage
      */
-    abstract function receiveMessage($queueId = null);
+    abstract public function receiveMessage($queueId = null);
 
     /**
      * @param QueueMessage $message
      */
-    abstract function completeMessage(QueueMessage $message);
+    abstract public function completeMessage(QueueMessage $message);
 
     /**
      * @param QueueMessage $message
      */
-    abstract function returnMessage(QueueMessage $message);
+    abstract public function returnMessage(QueueMessage $message);
 
 } 
