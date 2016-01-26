@@ -14,8 +14,6 @@ use Silktide\QueueBall\Message\QueueMessage;
 abstract class AbstractQueue
 {
 
-    const DEFAULT_MESSAGE_LOCK_TIMEOUT = 120;
-
     /**
      * @var string
      */
@@ -66,10 +64,9 @@ abstract class AbstractQueue
 
     /**
      * @param string $queueId
-     * @param int $messageLockTimeout
      * @param array $options
      */
-    abstract public function createQueue($queueId, $messageLockTimeout = 0, $options = []);
+    abstract public function createQueue($queueId, $options = []);
 
     /**
      * @param string|null $queueId
