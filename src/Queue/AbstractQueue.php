@@ -21,6 +21,8 @@ abstract class AbstractQueue
      */
     protected $queueId;
 
+    protected $waitTime = 0;
+
     /**
      * @param string $queueId
      */
@@ -50,6 +52,19 @@ abstract class AbstractQueue
     }
 
     /**
+     * @param int $seconds
+     * @throws \Exception
+     */
+    public function setWaitTime($seconds)
+    {
+        $seconds = (int) $seconds;
+        if ($seconds < 0 || 20 < $seconds) {
+            throw new \Exception("WaitTime must be a period between 0-20 seconds");
+        }
+        $this->waitTime = $seconds;
+    }
+
+    /**
      * @param string $queueId
      * @param int $messageLockTimeout
      * @param array $options
@@ -69,9 +84,10 @@ abstract class AbstractQueue
 
     /**
      * @param string|null $queueId
+     * @param int $waitTime
      * @return QueueMessage
      */
-    abstract public function receiveMessage($queueId = null);
+    abstract public function receiveMessage($queueId = null, $waitTime = 0);
 
     /**
      * @param QueueMessage $message
