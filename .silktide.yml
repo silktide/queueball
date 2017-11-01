@@ -1,4 +1,6 @@
 ---
+app: queueball
 type: library
 source: open
+language: php
 ...
