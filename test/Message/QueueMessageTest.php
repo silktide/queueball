@@ -3,12 +3,14 @@
  * Silktide Nibbler. Copyright 2013-2014 Silktide Ltd. All Rights Reserved.
  */
 namespace Silktide\QueueBall\Test\Message;
+use PHPUnit\Framework\TestCase;
 use Silktide\QueueBall\Message\QueueMessage;
 
 /**
  *
  */
-class QueueMessageTest extends \PHPUnit_Framework_TestCase {
+class QueueMessageTest extends TestCase
+{
 
     /**
      * @dataProvider properties

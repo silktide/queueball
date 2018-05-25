@@ -3,6 +3,7 @@
  * Silktide Nibbler. Copyright 2013-2014 Silktide Ltd. All Rights Reserved.
  */
 namespace Silktide\QueueBall\Test\Queue;
+use PHPUnit\Framework\TestCase;
 use Silktide\QueueBall\Exception\QueueException;
 use Silktide\QueueBall\Queue\AbstractQueue;
 use Silktide\QueueBall\Queue\SqsQueue;
@@ -13,8 +14,8 @@ use Silktide\QueueBall\Message\QueueMessage;
 /**
  *
  */
-class SqsQueueTest extends \PHPUnit_Framework_TestCase {
-
+class SqsQueueTest extends TestCase
+{
     /**
      * @var SqsClient
      */
@@ -161,6 +162,7 @@ class SqsQueueTest extends \PHPUnit_Framework_TestCase {
         ];
         $this->sqsClient->shouldReceive("sendMessage")->with($expectedArg)->once();
         $queue->sendMessage($message, $this->queueId);
+        $this->assertTrue(true);
     }
 
     public function testReceiveMessage()
@@ -186,6 +188,7 @@ class SqsQueueTest extends \PHPUnit_Framework_TestCase {
 
         $queue = new SqsQueue($this->sqsClient, $this->messageFactory);
         $queue->completeMessage($this->queueMessage);
+        $this->assertTrue(true);
     }
 
     public function testReturnMessage()
@@ -199,6 +202,7 @@ class SqsQueueTest extends \PHPUnit_Framework_TestCase {
 
         $queue = new SqsQueue($this->sqsClient, $this->messageFactory);
         $queue->returnMessage($this->queueMessage);
+        $this->assertTrue(true);
     }
 
 }

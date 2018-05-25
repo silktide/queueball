@@ -3,13 +3,15 @@
  * Silktide Nibbler. Copyright 2013-2014 Silktide Ltd. All Rights Reserved.
  */
 namespace Silktide\QueueBall\Test\Message;
+use PHPUnit\Framework\TestCase;
 use Silktide\QueueBall\Exception\QueueException;
 use Silktide\QueueBall\Message\SqsMessageFactory;
 
 /**
  *
  */
-class SqsMessageFactoryTest extends \PHPUnit_Framework_TestCase {
+class SqsMessageFactoryTest extends TestCase
+{
 
     public function testExceptions()
     {
